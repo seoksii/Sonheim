@@ -13,7 +13,7 @@ public class ItemSlotUI : MonoBehaviour
     private ItemSlot curSlot;
     private Outline outline;
 
-    public int index;
+    public int myindex;
     public bool isEquipped;
     private void Awake()
     {
@@ -27,6 +27,7 @@ public class ItemSlotUI : MonoBehaviour
 
     public void Set(ItemSlot slot)
     {
+        Debug.Log(myindex);
         curSlot = slot;
         icon.gameObject.SetActive(true);
         icon.sprite = slot.item.icon;
@@ -47,8 +48,8 @@ public class ItemSlotUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("slot selected : " + index.ToString());
-        Inventory.instance.SelectItem(index);
-        
+        int i = myindex;
+        Debug.Log("slot selected : " + i.ToString());
+        Inventory.instance.SelectItem(myindex);
     }
 }

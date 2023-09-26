@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class InventoryPlayer : MonoBehaviour
 {
-    Inventory inventory;
     [SerializeField] Sprite apple;
     [SerializeField] Sprite sword;
     ItemData_SY item_apple;
     ItemData_SY item_sword;
     void Start()
     {
-        inventory = GetComponent<Inventory>();
-
         item_apple = new ItemData_SY();
         item_apple.icon = apple;
         item_apple.isStackable = true;
@@ -32,15 +29,15 @@ public class InventoryPlayer : MonoBehaviour
 
     public void OnClickInventoryToggleButton()
     {
-        inventory.Toggle();
+        Inventory.instance.Toggle();
     }
 
     public void InputApple()
     {
-        inventory.AddItem(item_apple);
+        Inventory.instance.AddItem(item_apple);
     }
     public void InputSword()
     {
-        inventory.AddItem(item_sword);
+        Inventory.instance.AddItem(item_sword);
     }
 }

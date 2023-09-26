@@ -69,7 +69,8 @@ public class Inventory : MonoBehaviour
         for(int i= 0; i <slots.Length ; i++)
         {
             slots[i] = new ItemSlot();
-            uiSlots[i].index = i;
+            uiSlots[i].myindex = i;
+            Debug.Log(uiSlots[i].myindex.ToString());
             uiSlots[i].Clear();
         }
 
@@ -130,7 +131,8 @@ public class Inventory : MonoBehaviour
 
     public void ThrowItem(ItemData_SY item)
     {
-        Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+        // Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+        Debug.Log("발사" + item.displayName);
     }
 
     public void UpdateUI()
