@@ -5,12 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlotUI_SY : MonoBehaviour
+public class ItemSlotUI : MonoBehaviour
 {
     public Button button;
     public Image icon;
     public TextMeshProUGUI quantityText;
-    private ItemSlot_SY curSlot;
+    private ItemSlot curSlot;
     private Outline outline;
 
     public int index;
@@ -25,7 +25,7 @@ public class ItemSlotUI_SY : MonoBehaviour
         outline.enabled = isEquipped;
     }
 
-    public void Set(ItemSlot_SY slot)
+    public void Set(ItemSlot slot)
     {
         curSlot = slot;
         icon.gameObject.SetActive(true);
@@ -47,6 +47,6 @@ public class ItemSlotUI_SY : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Inventory_SY.instance.SelectItem(index);
+        Inventory.instance.SelectItem(index);
     }
 }

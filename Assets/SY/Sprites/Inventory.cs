@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 
 public enum ITEMTYPE_SY { CONSUMABLE, EQUIPMENT, }
-public class ItemSlot_SY
+public class ItemSlot
 {
     public ItemData_SY item;
     public int quantity;
@@ -28,16 +28,16 @@ public class ItemData_SY
     public ITEMTYPE_SY itemType;
 }
 
-public class Inventory_SY : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public ItemSlotUI_SY[] uiSlots;
-    public ItemSlot_SY[] slots;
+    public ItemSlotUI[] uiSlots;
+    public ItemSlot[] slots;
 
     public GameObject inventoryWindow;
     public Transform dropPosition;
 
     [Header("Selected Item")]
-    private ItemSlot_SY selectedItem;
+    private ItemSlot selectedItem;
     private int selectedItemIndex;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
@@ -54,7 +54,7 @@ public class Inventory_SY : MonoBehaviour
     public UnityEvent onOpenInventory;
     public UnityEvent onCloseInventory;
 
-    public static Inventory_SY instance;
+    public static Inventory instance;
 
     private void Awake()
     {
@@ -64,11 +64,11 @@ public class Inventory_SY : MonoBehaviour
     private void Start()
     {
         inventoryWindow.SetActive(false);
-        slots = new ItemSlot_SY[uiSlots.Length];
+        slots = new ItemSlot[uiSlots.Length];
 
         for(int i= 0; i <slots.Length ; i++)
         {
-            slots[i] = new ItemSlot_SY();
+            slots[i] = new ItemSlot();
             uiSlots[i].index = i;
             uiSlots[i].Clear();
         }
@@ -108,7 +108,7 @@ public class Inventory_SY : MonoBehaviour
     {
         if (item.isStackable)
         {
-            ItemSlot_SY slotToStackTo = GetItemStack(item);
+            ItemSlot slotToStackTo = GetItemStack(item);
             if(slotToStackTo != null)
             {
                 slotToStackTo.quantity++;
@@ -117,7 +117,7 @@ public class Inventory_SY : MonoBehaviour
             }
         }
 
-        ItemSlot_SY emptySlot = GetEmptySlot();
+        ItemSlot emptySlot = GetEmptySlot();
         
         if (emptySlot != null)
         {
@@ -150,7 +150,7 @@ public class Inventory_SY : MonoBehaviour
         }
     }
 
-    public ItemSlot_SY GetItemStack(ItemData_SY item)
+    public ItemSlot GetItemStack(ItemData_SY item)
     {
         for( int i = 0; i < slots.Length; i++)
         {
@@ -160,7 +160,7 @@ public class Inventory_SY : MonoBehaviour
         return null;
     }
 
-    public ItemSlot_SY GetEmptySlot()
+    public ItemSlot GetEmptySlot()
     {
         for (int i = 0; i < slots.Length; i++)
         {
