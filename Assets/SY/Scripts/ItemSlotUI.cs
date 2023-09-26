@@ -30,7 +30,7 @@ public class ItemSlotUI : MonoBehaviour
         Debug.Log(myindex);
         curSlot = slot;
         icon.gameObject.SetActive(true);
-        icon.sprite = slot.item.icon;
+        icon.sprite = slot.item.Icon;
         quantityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;
 
         if ( outline != null )

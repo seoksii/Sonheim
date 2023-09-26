@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f02e6c56473345a8a29f3ccb8d6113f, type: 3}
   m_Name: Club
   m_EditorClassIdentifier: 
-  DisplayName: 
-  Description: 
-  Type: 0
-  Icon: {fileID: 0}
+  DisplayName: "\uBABD\uB465\uC774"
+  Description: "\uB9DE\uC73C\uBA74 \uC544\uD50C \uAC83 \uAC19\uB2E4."
+  Type: 1
+  Icon: {fileID: -1384659912, guid: a8f4e4c2003c141858e019922a62ab4d, type: 3}
   DropPrefab: {fileID: 0}
   IsStackable: 0
   MaxStackAmount: 0
