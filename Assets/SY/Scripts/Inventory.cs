@@ -185,7 +185,11 @@ public class Inventory : MonoBehaviour
         selectedItemStatNames.text = string.Empty;
         selectedItemStatValue.text = string.Empty;
 
-        //for( int i = 0; i < selectedItem)
+        //for( int i = 0; i < selectedItem.item.consumables.Length; i++)
+        //{
+        //    selectedItemStatNames.text += selectedItem.item.consumables[i].type.ToString()
+        //                                  + selectedItem.item.consumables[i].value.ToString() + "\n" ;
+        //}
 
         useButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.CONSUMABLE);
         equipButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.EQUIPMENT && !uiSlots[index].isEquipped);
@@ -209,7 +213,26 @@ public class Inventory : MonoBehaviour
 
     public void OnUseButton()
     {
+        //if (selectedItem.item.itemType == ITEMTYPE_SY.CONSUMABLE)
+        //{
+        //    for( int i= 0; i < selectedItem.item.consumables.Length; i++)
+        //    {
+        //        switch (selectedItem.item.consumables[i].type)
+        //        {
+        //            case ConsumableType.Health:
+        //                // 플레이어쪽 살펴보기
+        //                break;
 
+        //            case ConsumableType.Hunger:
+        //                // 플레이어쪽 살펴보기
+        //                break;
+        //            case ConsumableType.Thirsty:
+        //                // 플레이어쪽 살펴보기
+        //                break;
+        //        }
+        //    }
+        //}
+        RemoveSelectedItem();
     }
     public void OnEquipButton()
     {
@@ -223,10 +246,10 @@ public class Inventory : MonoBehaviour
     public void OnDropButton()
     {
         ThrowItem(selectedItem.item);
-        RemoveSelectedItem(selectedItem.item);
+        RemoveSelectedItem();
     }
 
-    public void RemoveSelectedItem(ItemData_SY item)
+    public void RemoveSelectedItem()
     {
         selectedItem.quantity--;
         if(selectedItem.quantity <= 0)
@@ -239,6 +262,7 @@ public class Inventory : MonoBehaviour
             selectedItem.item = null;
             ClearSelectedItemWindow();
         }
+        UpdateUI();
     }
     public bool HasItems(ItemData_SY item, int quantity)
     {
