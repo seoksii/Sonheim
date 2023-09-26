@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f02e6c56473345a8a29f3ccb8d6113f, type: 3}
   m_Name: WoodenCup_Water
   m_EditorClassIdentifier: 
-  DisplayName: 
-  Description: 
-  Type: 0
-  Icon: {fileID: 0}
+  DisplayName: "\uBB3C\uC774 \uB4E0 \uB098\uBB34 \uCEF5"
+  Description: "\uBB3C \uC12D\uCDE8 \uAD8C\uC7A5\uB7C9\uC740 \uD558\uB8E8\uC5D0 2\uB9AC\uD130
+    \uC785\uB2C8\uB2E4."
+  Type: 2
+  Icon: {fileID: 1453834270, guid: a8f4e4c2003c141858e019922a62ab4d, type: 3}
   DropPrefab: {fileID: 0}
   IsStackable: 0
   MaxStackAmount: 0
-  Consumables: []
+  Consumables:
+  - Type: 1
+    Value: 10

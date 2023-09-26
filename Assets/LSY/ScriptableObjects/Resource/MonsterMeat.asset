@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f02e6c56473345a8a29f3ccb8d6113f, type: 3}
   m_Name: MonsterMeat
   m_EditorClassIdentifier: 
-  DisplayName: 
-  Description: 
+  DisplayName: "\uBAAC\uC2A4\uD130 \uACE0\uAE30"
+  Description: "\uC0DD\uACE0\uAE30\uB294 \uBA39\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
   Type: 0
-  Icon: {fileID: 0}
+  Icon: {fileID: -1863775349, guid: a8f4e4c2003c141858e019922a62ab4d, type: 3}
   DropPrefab: {fileID: 0}
-  IsStackable: 0
-  MaxStackAmount: 0
+  IsStackable: 1
+  MaxStackAmount: 99
   Consumables: []
