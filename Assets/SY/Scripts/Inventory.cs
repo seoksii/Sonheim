@@ -116,7 +116,6 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
-
         ItemSlot emptySlot = GetEmptySlot();
         
         if (emptySlot != null)
@@ -126,7 +125,6 @@ public class Inventory : MonoBehaviour
             UpdateUI();
             return;
         }
-
         ThrowItem(item);
     }
 
