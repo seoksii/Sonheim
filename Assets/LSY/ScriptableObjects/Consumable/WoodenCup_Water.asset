@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f02e6c56473345a8a29f3ccb8d6113f, type: 3}
-  m_Name: Mushroom
+  m_Name: WoodenCup_Water
   m_EditorClassIdentifier: 
-  DisplayName: "\uBC84\uC12F"
-  Description: "\uD5C8\uAE30\uB97C \uC57D\uAC04 \uCC44\uC6C1\uB2C8\uB2E4."
-  Type: 2
+  DisplayName: 
+  Description: 
+  Type: 0
   Icon: {fileID: 0}
   DropPrefab: {fileID: 0}
-  IsStackable: 1
-  MaxStackAmount: 99
-  Consumables:
-  - Type: 0
-    Value: 1
+  IsStackable: 0
+  MaxStackAmount: 0
+  Consumables: []
