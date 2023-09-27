@@ -2500,6 +2500,8 @@ MonoBehaviour:
   - {fileID: 644939806}
   - {fileID: 450450745}
   - {fileID: 2052381934}
+  slots: []
+  equips: []
   inventoryPanel: {fileID: 1827578569}
   dropPosition: {fileID: 220193670}
   selectedItemName: {fileID: 1702849939}

@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CombineRecipe
+[CreateAssetMenu(fileName = "New CraftRecipe", menuName = "ScriptableObject/CraftRecipe", order = 0)]
+public class CraftRecipe : ScriptableObject
 {
-    //public ItemData_SY[] inputs;
-    //public ItemData_SY output;
+    [SerializeField] public ItemSlot[] requiredItems;
+    [SerializeField] public ItemSlot resultItem;
+
+    public CraftRecipe()
+    {
+        requiredItems = new ItemSlot[4];
+        for(int i = 0; i < requiredItems.Length; i++)
+        {
+            requiredItems[i] = new ItemSlot();
+        }
+        resultItem = new ItemSlot();
+    }
 }
 public class RecipeUI : MonoBehaviour
 {

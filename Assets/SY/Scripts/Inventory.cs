@@ -1,16 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.Serialization;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 
+[Serializable]
 public class ItemSlot
 {
     public ItemData item;
+    [HideInInspector]
     public bool isEquipped;
     public int quantity;
 
