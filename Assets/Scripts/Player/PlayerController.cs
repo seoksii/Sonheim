@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     private Animator _animator;
 
+    private bool isSprint = false;
+
     public static PlayerController instance;
     private void Awake()
     {
@@ -31,19 +33,25 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void FixedUpdate()
+    void Update()
+    {
+        if (isSprint)
+        {
+            if (GameManager.Instance.Player.status.Stamina > 0) GameManager.Instance.Player.status.Stamina -= 10f * Time.deltaTime;
+        }
+        else
+        {
+            if (GameManager.Instance.Player.status.Stamina < 100) GameManager.Instance.Player.status.Stamina += 5f * Time.deltaTime;
+        }
+    }
+
+    void FixedUpdate()
     {
         Move();
     }
 
     private void Move()
     {
-        //Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        //dir *= moveSpeed;
-        //dir.y = _rigidbody.velocity.y;
-
-        //_rigidbody.velocity = dir;
-
         if (direction != Vector3.zero)
         {
             Quaternion targetAngle = Quaternion.LookRotation(direction);
@@ -58,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !Inventory.instance.IsOpen() && context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
             direction = new Vector3(curMovementInput.x, 0f, curMovementInput.y);
@@ -70,15 +78,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnSprintInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            if (GameManager.Instance.Player.status.Stamina > 0)
+            {
+                moveSpeed *= 1.5f;
+                isSprint = true;
+                _animator.SetBool("IsSprint", true);
+            }
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            moveSpeed /= 1.5f;
+            isSprint = false;
+            _animator.SetBool("IsSprint", false);
+        }
+    }
+
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         //Debug.Log("SPACE");
+        //if (!Inventory.instance.IsOpen() && context.phase == InputActionPhase.Started)
+        //{
+        //    if (IsGrounded())
+        //    {
+        //        _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
+        //        _animator.SetTrigger("IsJump");
+        //    }
+        //}
+    }
+
+    public void OnInventoryInput(InputAction.CallbackContext context)
+    {
+        Debug.Log("Inventory!");
         if (context.phase == InputActionPhase.Started)
         {
-            if (IsGrounded())
-                _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
-
+            ToggleCursor(true);
+            Inventory.instance.Toggle();
         }
+
     }
 
     private bool IsGrounded()
@@ -116,4 +156,16 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         //canLook = !toggle;
     }
+
+    private void DecreaseStamina()
+    {
+        if (GameManager.Instance.Player.status.Stamina > 0) GameManager.Instance.Player.status.Stamina -= 5;
+    }
+
+    private void IncraseStamina()
+    {
+        if (GameManager.Instance.Player.status.Stamina < 100) GameManager.Instance.Player.status.Stamina += 5;
+    }
+
+
 }
