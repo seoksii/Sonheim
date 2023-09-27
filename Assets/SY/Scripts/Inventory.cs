@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
     public Transform dropPosition;
 
     [Header("Selected Item")]
-    private ItemSlot selectedItem;
+    [SerializeField] private ItemSlot selectedItem;
     private int selectedItemIndex;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
@@ -293,6 +293,7 @@ public class Inventory : MonoBehaviour
     public void UnequipHere()
     {
         selectedItem.isEquipped = false;
+        if (equips[0] == selectedItem) equips[0] = null;
         UpdateUI();
         SelectItem(selectedItemIndex);
     }
