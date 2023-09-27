@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CombineRecipe
 {
-    public ItemData_SY[] inputs;
-    public ItemData_SY output;
+    //public ItemData_SY[] inputs;
+    //public ItemData_SY output;
 }
 public class RecipeUI : MonoBehaviour
 {

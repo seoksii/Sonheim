@@ -8,32 +8,19 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public enum ITEMTYPE_SY { CONSUMABLE, EQUIPMENT, }
 public class ItemSlot
 {
-    public ItemData_SY item;
+    public ItemData item;
     public int quantity;
 }
 
-
-public class ItemData_SY
-{
-    public Sprite icon;
-    public bool isStackable;
-    public GameObject dropPrefab;
-    public int maxStackAmount;
-    public string displayName;
-    public string description;
-
-    public ITEMTYPE_SY itemType;
-}
 
 public class Inventory : MonoBehaviour
 {
     public ItemSlotUI[] uiSlots;
     public ItemSlot[] slots;
 
-    public GameObject inventoryWindow;
+    public GameObject inventoryPanel;
     public Transform dropPosition;
 
     [Header("Selected Item")]
@@ -63,7 +50,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        inventoryWindow.SetActive(false);
+        inventoryPanel.SetActive(false);
         slots = new ItemSlot[uiSlots.Length];
 
         for(int i= 0; i <slots.Length ; i++)
@@ -75,6 +62,7 @@ public class Inventory : MonoBehaviour
         }
 
         ClearSelectedItemWindow();
+        
     }
 
     //public void OnInventoryButton(InputAction.CallbackContext callbackContext)
@@ -87,27 +75,27 @@ public class Inventory : MonoBehaviour
     
     public void Toggle()
     {
-        if (inventoryWindow.activeInHierarchy)
+        if (inventoryPanel.activeInHierarchy)
         {
-            inventoryWindow.SetActive(false);
+            inventoryPanel.SetActive(false);
             onCloseInventory?.Invoke();
             
         }
         else
         {
-            inventoryWindow.SetActive(true);
+            inventoryPanel.SetActive(true);
             onOpenInventory?.Invoke();
         }
     }
 
     public bool IsOpen()
     {
-        return inventoryWindow.activeInHierarchy;
+        return inventoryPanel.activeInHierarchy;
     }
 
-    public void AddItem(ItemData_SY item)
+    public void AddItem(ItemData item)
     {
-        if (item.isStackable)
+        if (item.IsStackable)
         {
             ItemSlot slotToStackTo = GetItemStack(item);
             if(slotToStackTo != null)
@@ -129,10 +117,10 @@ public class Inventory : MonoBehaviour
         ThrowItem(item);
     }
 
-    public void ThrowItem(ItemData_SY item)
+    public void ThrowItem(ItemData item)
     {
         // Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-        Debug.Log("발사" + item.displayName);
+        Debug.Log("발사" + item.DisplayName);
     }
 
     public void UpdateUI()
@@ -150,11 +138,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public ItemSlot GetItemStack(ItemData_SY item)
+    public ItemSlot GetItemStack(ItemData item)
     {
         for( int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == item && slots[i].quantity < item.maxStackAmount)
+            if (slots[i].item == item && slots[i].quantity < item.MaxStackAmount)
                 return slots[i];
         }
         return null;
@@ -179,8 +167,8 @@ public class Inventory : MonoBehaviour
         selectedItem = slots[index];
         selectedItemIndex = index;
 
-        selectedItemName.text = selectedItem.item.displayName;
-        selectedItemDescription.text = selectedItem.item.description;
+        selectedItemName.text = selectedItem.item.DisplayName;
+        selectedItemDescription.text = selectedItem.item.Description;
 
         selectedItemStatNames.text = string.Empty;
         selectedItemStatValue.text = string.Empty;
@@ -191,9 +179,9 @@ public class Inventory : MonoBehaviour
         //                                  + selectedItem.item.consumables[i].value.ToString() + "\n" ;
         //}
 
-        useButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.CONSUMABLE);
-        equipButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.EQUIPMENT && !uiSlots[index].isEquipped);
-        unequipButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.EQUIPMENT && uiSlots[index].isEquipped);
+        useButton.SetActive(selectedItem.item.Type == ItemType.Consumable);
+        equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !uiSlots[index].isEquipped);
+        unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && uiSlots[index].isEquipped);
         dropButton.SetActive(true);
     }
     public void ClearSelectedItemWindow()
@@ -264,7 +252,7 @@ public class Inventory : MonoBehaviour
         }
         UpdateUI();
     }
-    public bool HasItems(ItemData_SY item, int quantity)
+    public bool HasItems(ItemData item, int quantity)
     {
         return false;
     }
@@ -273,4 +261,5 @@ public class Inventory : MonoBehaviour
     {
 
     }
+
 }
