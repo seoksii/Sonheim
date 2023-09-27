@@ -2474,7 +2474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: ab55c13cd57601f49ab3e1e036899c3d, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 515e9e11142aa6f40b2f39525cdda357, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -2547,22 +2547,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0dbe8df2-b9c3-4828-8ca3-1b5e549d9eb6
     m_ActionName: Player/Interact[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9d86c4e4-c6d7-447a-995d-a632d7d42882
-    m_ActionName: Player/Equipment[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2673,7 +2657,7 @@ MonoBehaviour:
   selectedItemName: {fileID: 1702849939}
   selectedItemDescription: {fileID: 1288151281}
   selectedItemStatNames: {fileID: 478731839}
-  selectedItemStatValue: {fileID: 292766889}
+  selectedItemStatValues: {fileID: 292766889}
   useButton: {fileID: 773714644}
   equipButton: {fileID: 749524047}
   unequipButton: {fileID: 849427558}
@@ -3456,7 +3440,7 @@ GameObject:
   - component: {fileID: 292766888}
   - component: {fileID: 292766889}
   m_Layer: 5
-  m_Name: ItemValue
+  m_Name: ItemStatValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5050,7 +5034,7 @@ GameObject:
   - component: {fileID: 478731838}
   - component: {fileID: 478731839}
   m_Layer: 5
-  m_Name: ItemName
+  m_Name: ItemStatName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
