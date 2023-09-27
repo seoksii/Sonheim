@@ -11,7 +11,13 @@ using UnityEngine.Events;
 public class ItemSlot
 {
     public ItemData item;
+    public bool isEquipped;
     public int quantity;
+
+    public ItemSlot()
+    {
+        isEquipped = false;
+    }
 }
 
 
@@ -19,6 +25,7 @@ public class Inventory : MonoBehaviour
 {
     public ItemSlotUI[] uiSlots;
     public ItemSlot[] slots;
+    public ItemSlot[] equips;
 
     public GameObject inventoryPanel;
     public Transform dropPosition;
@@ -36,6 +43,10 @@ public class Inventory : MonoBehaviour
     public GameObject dropButton;
 
     private int curEquipIndex;
+    private Player player;
+
+    private bool isExistEquipInventory;
+    private EquipInventory equipInventory;
 
     [Header("Events")]
     public UnityEvent onOpenInventory;
@@ -46,6 +57,15 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        player = GetComponent<Player>();
+        if(TryGetComponent(out EquipInventory equipInventory))
+        {
+            isExistEquipInventory = true;
+        }
+        else
+        {
+            equips = new ItemSlot[3];
+        }
     }
 
     private void Start()
@@ -120,7 +140,7 @@ public class Inventory : MonoBehaviour
     public void ThrowItem(ItemData item)
     {
         // Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-        Debug.Log("발사" + item.DisplayName);
+        Debug.Log("아이템을 던졌다. :  " + item.DisplayName);
     }
 
     public void UpdateUI()
@@ -180,8 +200,8 @@ public class Inventory : MonoBehaviour
         //}
 
         useButton.SetActive(selectedItem.item.Type == ItemType.Consumable);
-        equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !uiSlots[index].isEquipped);
-        unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && uiSlots[index].isEquipped);
+        equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !slots[index].isEquipped);
+        unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && slots[index].isEquipped);
         dropButton.SetActive(true);
     }
     public void ClearSelectedItemWindow()
@@ -224,11 +244,17 @@ public class Inventory : MonoBehaviour
     }
     public void OnEquipButton()
     {
-
+        if (!isExistEquipInventory)
+        {
+            EquipHere();
+        }
     }
     public void OnUnequipButton()
     {
-
+        if (!isExistEquipInventory)
+        {
+            UnequipHere();
+        }
     }
 
     public void OnDropButton()
@@ -242,11 +268,10 @@ public class Inventory : MonoBehaviour
         selectedItem.quantity--;
         if(selectedItem.quantity <= 0)
         {
-            if (uiSlots[selectedItemIndex].isEquipped)
+            if (slots[selectedItemIndex].isEquipped)
             {
-                Unequip(selectedItemIndex);
+                UnequipHere();
             }
-
             selectedItem.item = null;
             ClearSelectedItemWindow();
         }
@@ -257,9 +282,20 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void Unequip(int index)
+    public void UnequipHere()
     {
+        selectedItem.isEquipped = false;
+        UpdateUI();
+        SelectItem(selectedItemIndex);
+    }
 
+    public void EquipHere()
+    {
+        selectedItem.isEquipped = true;
+        if (equips[0] != null) equips[0].isEquipped = false;
+        equips[0] = selectedItem;
+        UpdateUI();
+        SelectItem(selectedItemIndex);
     }
 
 }
