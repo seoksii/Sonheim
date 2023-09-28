@@ -103,12 +103,14 @@ public class Inventory : MonoBehaviour
         {
             inventoryPanel.SetActive(false);
             onCloseInventory?.Invoke();
+            UpdateUI();
             
         }
         else
         {
             inventoryPanel.SetActive(true);
             onOpenInventory?.Invoke();
+            UpdateUI();
         }
     }
 
@@ -285,8 +287,10 @@ public class Inventory : MonoBehaviour
         }
         UpdateUI();
     }
-    public bool HasItems(ItemData item, int quantity)
+    public bool HasItem(ItemData item)
     {
+        for(int i=0; i <slots.Length; i++)
+        { if (slots[i].item == item && slots[i].quantity > 0) return true; }
         return false;
     }
 
@@ -307,4 +311,29 @@ public class Inventory : MonoBehaviour
         SelectItem(selectedItemIndex);
     }
 
+    public ItemSlot FindSlot(ItemData item)
+    {
+        for (int i=0; i < slots.Length; i++)
+        {
+            if( slots[i].item == item) return slots[i];
+        }
+        return null;
+    }
+
+    public bool RemoveItem(ItemData item)
+    {
+        ItemSlot temp = FindSlot(item);
+        if (temp != null && temp.quantity > 0)
+        {
+            temp.quantity--;
+            if (temp.quantity <= 0)
+            {
+                temp.item = null;
+                ClearSelectedItemWindow();
+            }
+            UpdateUI();
+            return true;
+        }
+        return false;
+    }
 }
