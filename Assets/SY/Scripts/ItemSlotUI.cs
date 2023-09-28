@@ -14,7 +14,7 @@ public class ItemSlotUI : MonoBehaviour
 
     public Image icon;
     public TextMeshProUGUI quantityText;
-    private ItemSlot curSlot;
+    public ItemSlot curSlot;
     public Image background;
 
     private void Awake()
@@ -48,6 +48,13 @@ public class ItemSlotUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Inventory.instance.SelectItem(myindex);
+        if (Inventory.instance.IsOpen())
+        {
+            Inventory.instance.SelectItem(myindex);
+        }
+        if (CraftPanelUI.instance.IsOpen())
+        {
+            CraftPanelUI.instance.SelectItem(myindex);
+        }
     }
 }

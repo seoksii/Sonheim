@@ -304,11 +304,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbdd29a8df053d43a4b1c251a0e9e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myindex: 0
   button: {fileID: 4982242448028799275}
   icon: {fileID: 8351859001104021578}
   quantityText: {fileID: 1845843666047242392}
-  myindex: 0
-  isEquipped: 0
+  curSlot:
+    item: {fileID: 0}
+    isEquipped: 0
+    quantity: 0
+  background: {fileID: 9089499200086923233}
 --- !u!114 &4982242448028799275
 MonoBehaviour:
   m_ObjectHideFlags: 0
