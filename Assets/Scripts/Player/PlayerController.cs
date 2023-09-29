@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
 
     private bool isSprint = false;
+    private bool canAttack = true;
+    private float attackDelay;
 
     public static PlayerController instance;
     private void Awake()
@@ -47,7 +49,9 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(canAttack);
         Move();
+        Attack();
     }
 
     private void Move()
@@ -60,13 +64,21 @@ public class PlayerController : MonoBehaviour
 
         _rigidbody.velocity = direction * moveSpeed + Vector3.up * _rigidbody.velocity.y;
 
+        if (!canAttack) _rigidbody.velocity = Vector3.zero;
+
         _animator.SetBool("IsRun", _rigidbody.velocity != Vector3.zero);
+    }
+
+    private void Attack()
+    {
+        attackDelay += Time.deltaTime;
+        canAttack = 1.0f < attackDelay;
     }
 
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !Inventory.instance.IsOpen() && context.phase == InputActionPhase.Performed)
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack 1") && !Inventory.instance.IsOpen() && context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
             direction = new Vector3(curMovementInput.x, 0f, curMovementInput.y);
@@ -119,6 +131,18 @@ public class PlayerController : MonoBehaviour
             Inventory.instance.Toggle();
         }
 
+    }
+
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (canAttack && !isSprint)
+            {
+                _animator.SetTrigger("DoAttack");
+                attackDelay = 0;
+            }
+        }
     }
 
     private bool IsGrounded()
