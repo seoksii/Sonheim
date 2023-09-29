@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+
     private void Awake()
     {
         instance = this;
@@ -81,12 +82,10 @@ public class Inventory : MonoBehaviour
         {
             slots[i] = new ItemSlot();
             uiSlots[i].myindex = i;
-            Debug.Log(uiSlots[i].myindex.ToString());
             uiSlots[i].Clear();
         }
 
         ClearSelectedItemWindow();
-        
     }
 
     //public void OnInventoryButton(InputAction.CallbackContext callbackContext)
@@ -331,7 +330,9 @@ public class Inventory : MonoBehaviour
                 temp.item = null;
                 ClearSelectedItemWindow();
             }
-            UpdateUI();
+
+            if (inventoryPanel.activeInHierarchy) { UpdateUI(); }
+            else { CraftPanelUI.instance.UpdateResourcesUI(); }            
             return true;
         }
         return false;

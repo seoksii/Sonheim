@@ -36,18 +36,18 @@ public class RecipeUI : MonoBehaviour
         gameObject.SetActive(true);
         for (int i = 0; i < requiredItemSlotui.Length; i++)
         {
-            if (newRecipe.requiredItems[i] != null)
+            if ( newRecipe.requiredItems[i].item != null)
             {
                 requiredItemSlotui[i].Set(newRecipe.requiredItems[i]);
                 requiredItemSlotui[i].gameObject.SetActive(true);
             }
             else
             {
-                requiredItemSlotui[i].Clear();
                 requiredItemSlotui[i].gameObject.SetActive(false);
             }
         }
-        curRecipeState = SetState(_inventory, _craftBox, newRecipe);
+        resultItemSlotui.Set(newRecipe.resultItem);
+        SetState(_inventory, _craftBox, newRecipe);
     }
     public void Clear()
     {
@@ -70,12 +70,13 @@ public class RecipeUI : MonoBehaviour
         CraftPanelUI.instance.OnClickRecipe(curRecipe);
     }
 
-    public CraftState SetState(ItemSlot[] _inventory, ItemSlot[] _craftBox, CraftRecipe _recipe)
+    public void SetState(ItemSlot[] _inventory, ItemSlot[] _craftBox, CraftRecipe _recipe)
     {
-        CraftState state = CraftState.Craftable;
         int need;
         int total_Inventory;
         int total_CraftBox;
+
+        curRecipeState = CraftState.Craftable;
 
         for (int i = 0; i < _recipe.requiredItems.Length; i++)
         {
@@ -100,20 +101,19 @@ public class RecipeUI : MonoBehaviour
                 }
             }
 
-            if (need > total_CraftBox && state == CraftState.Craftable)
+            if (need > total_CraftBox)
             {
-                state = CraftState.EnoughInInventory;
+                curRecipeState = CraftState.EnoughInInventory;
             }
 
             if (need > total_Inventory + total_CraftBox)
             {
-                state = CraftState.NotEnough;
+                curRecipeState = CraftState.NotEnough;
                 break;
             }
         }
         SetColor();
         SetButton();
-        return state;
     }
 
     public void SetColor()
@@ -126,45 +126,7 @@ public class RecipeUI : MonoBehaviour
     public void SetButton()
     {
         if (curRecipeState == CraftState.Craftable) button.interactable = true;
-        if (curRecipeState == CraftState.EnoughInInventory) button.interactable = true;
+        if (curRecipeState == CraftState.EnoughInInventory) button.interactable = false;
         if (curRecipeState == CraftState.NotEnough) button.interactable = false;
     }
-    //public int myindex;
-    //public Button button;
-    //private Outline outline;
-
-
-    //private void Awake()
-    //{
-    //    background = GetComponent<Image>();
-    //    outline = GetComponent<Outline>();
-    //}
-
-
-    //public void Set(ItemSlot slot)
-    //{
-    //    curSlot = slot;
-    //    icon.gameObject.SetActive(true);
-    //    icon.sprite = slot.item.Icon;
-    //    quantityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;
-
-    //    if (curSlot.isEquipped) { background.color = Color.yellow; }
-    //    else { background.color = Color.white; }
-    //    if (outline != null) { outline.enabled = curSlot.isEquipped; }
-    //}
-
-    //public void Clear()
-    //{
-    //    curSlot = null;
-    //    icon.gameObject.SetActive(false);
-    //    quantityText.text = string.Empty;
-
-    //    background.color = Color.white;
-    //    if (outline != null) { outline.enabled = false; }
-    //}
-
-    //public void OnButtonClick()
-    //{
-    //    Inventory.instance.SelectItem(myindex);
-    //}
 }

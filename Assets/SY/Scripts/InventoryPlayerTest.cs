@@ -10,7 +10,10 @@ public class InventoryPlayerTest : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            Inventory.instance.AddItem(items[i]);
+            if (items[i].Type == ItemType.Resource)
+            {
+                Inventory.instance.AddItem(items[i]);
+            }
         }
     }
     public void OnClickAddRandomItemButton()

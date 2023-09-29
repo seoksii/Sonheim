@@ -1052,9 +1052,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: OnDropButton
+      - m_Target: {fileID: 7519373292242588526}
+        m_TargetAssemblyTypeName: CraftPanelUI, Assembly-CSharp
+        m_MethodName: OnClickMakeButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1620,7 +1620,9 @@ MonoBehaviour:
   selectedItemDescription: {fileID: 7754251502313717612}
   addButton: {fileID: 1195304274708248400}
   removeButton: {fileID: 2896223615841668425}
+  craftButton: {fileID: 2516529278020250501}
   craftBox: []
+  resources: []
   craftBoxState: 0
   resourcesUI:
   - {fileID: 3203584563503218527}
@@ -1659,12 +1661,16 @@ MonoBehaviour:
   - {fileID: 7412302870652732585}
   - {fileID: 6808730591652315186}
   craftBoxResultUI: {fileID: 8431897459820413006}
+  craftBoxResultUI2: {fileID: 4636461096722876080}
+  craftResultItemName: {fileID: 7977401977440071181}
+  craftResultItemDescription: {fileID: 3014997163288775111}
+  craftResultItemStatNames: {fileID: 1669214946980545551}
+  craftResultItemStatValues: {fileID: 4227619462538689427}
   craftBoxBackground: {fileID: 6083767182399231446}
   selectedItem:
     item: {fileID: 0}
     isEquipped: 0
     quantity: 0
-  selectedItemIndex: 0
   onOpenInventory:
     m_PersistentCalls:
       m_Calls: []
@@ -1673,6 +1679,7 @@ MonoBehaviour:
       m_Calls: []
   curRecipesList: []
   curRecipesUI: []
+  selectedRecipe: {fileID: 0}
 --- !u!1 &4223215555746796233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,7 +1766,7 @@ GameObject:
   - component: {fileID: 5640405645120377423}
   - component: {fileID: 1669214946980545551}
   m_Layer: 5
-  m_Name: ItemStatValue
+  m_Name: ItemStatName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2570,7 +2577,7 @@ GameObject:
   - component: {fileID: 9202337437454280564}
   - component: {fileID: 4227619462538689427}
   m_Layer: 5
-  m_Name: ItemStatValue (1)
+  m_Name: ItemStatValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4588,9 +4595,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4982242448028799275, guid: 1175139ac75b6974bad8144807df9638, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5908494319081965854, guid: 1175139ac75b6974bad8144807df9638, type: 3}
       propertyPath: m_Name
-      value: ItemSlot
+      value: ResultItem2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4602,6 +4613,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 799255775185971808, guid: 1175139ac75b6974bad8144807df9638, type: 3}
   m_PrefabInstance: {fileID: 1374770408344528374}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4636461096722876080 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6002223712668869446, guid: 1175139ac75b6974bad8144807df9638, type: 3}
+  m_PrefabInstance: {fileID: 1374770408344528374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbdd29a8df053d43a4b1c251a0e9e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1421164868850724936
 PrefabInstance:
   m_ObjectHideFlags: 0
