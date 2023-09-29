@@ -305,6 +305,9 @@ public class CraftPanelUI : MonoBehaviour
         {
             Inventory.instance.AddItem(selectedRecipe.resultItem.item);
         }
+        UpdateCraftBoxUI();
+        ResetButtons();
+        ResetCurRecipes();
         CheckCraftable();
     }
 
@@ -371,7 +374,6 @@ public class CraftPanelUI : MonoBehaviour
         }
     }
 
- 
     public void SetCraftBoxState(ItemSlot resultItem)
     {
         if ( craftBoxState == CraftState.NotEnough )
