@@ -8,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.XR;
 
 
 [Serializable]
@@ -57,6 +58,9 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    private ItemManager itemManager;
+    private PlayerController controller;
+
 
     private void Awake()
     {
@@ -70,6 +74,8 @@ public class Inventory : MonoBehaviour
         {
             equips = new ItemSlot[3];
         }
+
+        controller = GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -83,6 +89,7 @@ public class Inventory : MonoBehaviour
             uiSlots[i].myindex = i;
             uiSlots[i].Clear();
         }
+        itemManager = ItemManager._instance;
 
         ClearSelectedItemWindow();
     }
@@ -135,7 +142,9 @@ public class Inventory : MonoBehaviour
 
     public void ThrowItem(ItemData item)
     {
-        // Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
+        Vector3 itemRespawnPosition = gameObject.transform.position + controller.direction;
+        itemRespawnPosition = itemRespawnPosition + new Vector3(0, 1, 0);
+        itemManager.DropNewItem(itemRespawnPosition, item);
         Debug.Log("아이템을 던졌다. :  " + item.DisplayName);
     }
 

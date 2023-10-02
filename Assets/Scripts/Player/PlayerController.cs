@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public LayerMask groundLayerMask;
 
-    private Vector3 direction;
+    public Vector3 direction;
 
     private Rigidbody _rigidbody;
     private Animator _animator;

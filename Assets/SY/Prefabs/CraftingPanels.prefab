@@ -1494,7 +1494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1677,7 +1677,6 @@ MonoBehaviour:
   - {fileID: 5577513293877763289}
   - {fileID: 8100085160524922984}
   - {fileID: 5799530045831628844}
-  craftButton: {fileID: 2516529278020250501}
   craftBoxBackground: {fileID: 6083767182399231446}
   craftBoxUI:
   - {fileID: 3229686549168634170}
@@ -1721,6 +1720,7 @@ MonoBehaviour:
   - {fileID: 3927591635713831400}
   - {fileID: 6471229844596172805}
   - {fileID: 5497313679272273814}
+  craftButton: {fileID: 2516529278020250501}
   onOpenInventory:
     m_PersistentCalls:
       m_Calls: []
