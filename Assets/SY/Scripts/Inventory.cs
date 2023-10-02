@@ -1,54 +1,56 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.Serialization;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 
-public enum ITEMTYPE_SY { CONSUMABLE, EQUIPMENT, }
+[Serializable]
 public class ItemSlot
 {
-    public ItemData_SY item;
+    public ItemData item;
+    [HideInInspector]
+    public bool isEquipped;
     public int quantity;
+
+    public ItemSlot()
+    {
+        isEquipped = false;
+    }
 }
 
-
-public class ItemData_SY
-{
-    public Sprite icon;
-    public bool isStackable;
-    public GameObject dropPrefab;
-    public int maxStackAmount;
-    public string displayName;
-    public string description;
-
-    public ITEMTYPE_SY itemType;
-}
 
 public class Inventory : MonoBehaviour
 {
     public ItemSlotUI[] uiSlots;
     public ItemSlot[] slots;
+    public ItemSlot[] equips;
 
-    public GameObject inventoryWindow;
+    public GameObject inventoryPanel;
     public Transform dropPosition;
 
     [Header("Selected Item")]
-    private ItemSlot selectedItem;
+    [SerializeField] private ItemSlot selectedItem;
     private int selectedItemIndex;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
     public TextMeshProUGUI selectedItemStatNames;
-    public TextMeshProUGUI selectedItemStatValue;
+    public TextMeshProUGUI selectedItemStatValues;
     public GameObject useButton;
     public GameObject equipButton;
     public GameObject unequipButton;
     public GameObject dropButton;
 
     private int curEquipIndex;
+    private Player player;
+
+    private bool isExistEquipInventory;
+    private EquipInventory equipInventory;
 
     [Header("Events")]
     public UnityEvent onOpenInventory;
@@ -56,58 +58,61 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+
     private void Awake()
     {
         instance = this;
+        player = GetComponent<Player>();
+        if(TryGetComponent(out EquipInventory equipInventory))
+        {
+            isExistEquipInventory = true;
+        }
+        else
+        {
+            equips = new ItemSlot[3];
+        }
     }
 
     private void Start()
     {
-        inventoryWindow.SetActive(false);
+        inventoryPanel.SetActive(false);
         slots = new ItemSlot[uiSlots.Length];
 
         for(int i= 0; i <slots.Length ; i++)
         {
             slots[i] = new ItemSlot();
             uiSlots[i].myindex = i;
-            Debug.Log(uiSlots[i].myindex.ToString());
             uiSlots[i].Clear();
         }
 
         ClearSelectedItemWindow();
     }
-
-    //public void OnInventoryButton(InputAction.CallbackContext callbackContext)
-    //{
-    //    if(callbackContext.phase == InputActionPhase.Started)
-    //    {
-    //        Toggle();
-    //    }
-    //}
     
     public void Toggle()
     {
-        if (inventoryWindow.activeInHierarchy)
+        if (inventoryPanel.activeInHierarchy)
         {
-            inventoryWindow.SetActive(false);
+            inventoryPanel.SetActive(false);
             onCloseInventory?.Invoke();
+            UpdateUI();
             
         }
         else
         {
-            inventoryWindow.SetActive(true);
+            inventoryPanel.SetActive(true);
             onOpenInventory?.Invoke();
+            UpdateUI();
         }
     }
 
     public bool IsOpen()
     {
-        return inventoryWindow.activeInHierarchy;
+        return inventoryPanel.activeInHierarchy;
     }
 
-    public void AddItem(ItemData_SY item)
+    public void AddItem(ItemData item)
     {
-        if (item.isStackable)
+        if (item.IsStackable)
         {
             ItemSlot slotToStackTo = GetItemStack(item);
             if(slotToStackTo != null)
@@ -129,10 +134,10 @@ public class Inventory : MonoBehaviour
         ThrowItem(item);
     }
 
-    public void ThrowItem(ItemData_SY item)
+    public void ThrowItem(ItemData item)
     {
         // Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360f));
-        Debug.Log("발사" + item.displayName);
+        Debug.Log("아이템을 던졌다. :  " + item.DisplayName);
     }
 
     public void UpdateUI()
@@ -150,11 +155,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public ItemSlot GetItemStack(ItemData_SY item)
+    public ItemSlot GetItemStack(ItemData item)
     {
         for( int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == item && slots[i].quantity < item.maxStackAmount)
+            if (slots[i].item == item && slots[i].quantity < item.MaxStackAmount)
                 return slots[i];
         }
         return null;
@@ -179,21 +184,25 @@ public class Inventory : MonoBehaviour
         selectedItem = slots[index];
         selectedItemIndex = index;
 
-        selectedItemName.text = selectedItem.item.displayName;
-        selectedItemDescription.text = selectedItem.item.description;
+        selectedItemName.text = selectedItem.item.DisplayName;
+        selectedItemDescription.text = selectedItem.item.Description;
 
         selectedItemStatNames.text = string.Empty;
-        selectedItemStatValue.text = string.Empty;
+        selectedItemStatValues.text = string.Empty;
 
-        //for( int i = 0; i < selectedItem.item.consumables.Length; i++)
-        //{
-        //    selectedItemStatNames.text += selectedItem.item.consumables[i].type.ToString()
-        //                                  + selectedItem.item.consumables[i].value.ToString() + "\n" ;
-        //}
+        if(selectedItem.item.Consumables != null) 
+        {
+            for (int i = 0; i < selectedItem.item.Consumables.Length; i++)
+            {
+                selectedItemStatNames.text += selectedItem.item.Consumables[i].Type.ToString() + "\n";
+                selectedItemStatValues.text += selectedItem.item.Consumables[i].Value.ToString() + "\n";
+            }
+        }
 
-        useButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.CONSUMABLE);
-        equipButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.EQUIPMENT && !uiSlots[index].isEquipped);
-        unequipButton.SetActive(selectedItem.item.itemType == ITEMTYPE_SY.EQUIPMENT && uiSlots[index].isEquipped);
+
+        useButton.SetActive(selectedItem.item.Type == ItemType.Consumable);
+        equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !slots[index].isEquipped);
+        unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && slots[index].isEquipped);
         dropButton.SetActive(true);
     }
     public void ClearSelectedItemWindow()
@@ -203,7 +212,7 @@ public class Inventory : MonoBehaviour
         selectedItemDescription.text = string.Empty;
 
         selectedItemStatNames.text = string.Empty;
-        selectedItemStatValue.text = string.Empty;
+        selectedItemStatValues.text = string.Empty;
 
         useButton.SetActive(false);
         equipButton.SetActive(false);
@@ -236,11 +245,17 @@ public class Inventory : MonoBehaviour
     }
     public void OnEquipButton()
     {
-
+        if (!isExistEquipInventory)
+        {
+            EquipHere();
+        }
     }
     public void OnUnequipButton()
     {
-
+        if (!isExistEquipInventory)
+        {
+            UnequipHere();
+        }
     }
 
     public void OnDropButton()
@@ -254,23 +269,74 @@ public class Inventory : MonoBehaviour
         selectedItem.quantity--;
         if(selectedItem.quantity <= 0)
         {
-            if (uiSlots[selectedItemIndex].isEquipped)
+            if (slots[selectedItemIndex].isEquipped)
             {
-                Unequip(selectedItemIndex);
+                UnequipHere();
             }
-
             selectedItem.item = null;
             ClearSelectedItemWindow();
         }
         UpdateUI();
     }
-    public bool HasItems(ItemData_SY item, int quantity)
+    public bool HasItem(ItemData item)
     {
+        for(int i=0; i <slots.Length; i++)
+        { if (slots[i].item == item && slots[i].quantity > 0) return true; }
         return false;
     }
 
-    public void Unequip(int index)
+    public void UnequipHere()
     {
+        selectedItem.isEquipped = false;
+        if (equips[0] == selectedItem) equips[0] = null;
+        // 플레이어측 장착해제 함수 필요.
+        // 만약 전체 장착정보가 필요하면 ItemSlot[] equip 을 이용
+        // 개별 아이템 정보가 필요하면 equip[0].item => ItemData 받을수 잇음 무기,도구
+        // 0 -> 도구 , 1 -> 상의 , 2 -> 하의 , 3 -> 신발 예정이었는데.. 아직 0번밖에 없음 ㅋㅋ
+        
+        
 
+        UpdateUI();
+        SelectItem(selectedItemIndex);
+    }
+
+    public void EquipHere()
+    {
+        selectedItem.isEquipped = true;
+        if (equips[0] != null) equips[0].isEquipped = false;
+        equips[0] = selectedItem;
+        // 플레이어측 장착 함수 필요. 
+
+
+        UpdateUI();
+        SelectItem(selectedItemIndex);
+    }
+
+    public ItemSlot FindSlot(ItemData item)
+    {
+        for (int i=0; i < slots.Length; i++)
+        {
+            if( slots[i].item == item) return slots[i];
+        }
+        return null;
+    }
+
+    public bool RemoveItem(ItemData item)
+    {
+        ItemSlot temp = FindSlot(item);
+        if (temp != null && temp.quantity > 0)
+        {
+            temp.quantity--;
+            if (temp.quantity <= 0)
+            {
+                temp.item = null;
+                ClearSelectedItemWindow();
+            }
+
+            if (inventoryPanel.activeInHierarchy) { UpdateUI(); }
+            else { CraftPanelUI.instance.UpdateResourcesUI(); }            
+            return true;
+        }
+        return false;
     }
 }

@@ -1,16 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TileMapGenerator : MonoBehaviour
 {
-    [SerializeField] Grid grid;
+    public Grid MapGrid;
     
     [SerializeField] GameObject[] tilePrefabs;
-
+    [SerializeField] Transform _tileParents;
+    
     public string seed;
     public bool useRandomSeed;
     
-    [SerializeField] private Vector2Int size;
+    public Vector2Int size;
     [SerializeField, Range(0, 100)]
     private int normalBlockPercent;
     [SerializeField, Range(0, 100)]
@@ -22,7 +24,7 @@ public class TileMapGenerator : MonoBehaviour
     public int[,] MapHeights;
     public int[,] MapBiomes;
     
-    void Start()
+    void Awake()
     {
         GenerateMap();
         DrawMapTiles();
@@ -60,8 +62,6 @@ public class TileMapGenerator : MonoBehaviour
 
     void SmoothMap(int[,] map)
     {
-        int[,] newMap = new int[size.x, size.y];
-        
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
@@ -94,9 +94,11 @@ public class TileMapGenerator : MonoBehaviour
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 pos = grid.CellToWorld(new Vector3Int(x, y, 0));
-                GameObject generated = Instantiate(tilePrefabs[MapBiomes[x, y]], pos ,Quaternion.identity, gameObject.transform);
-                generated.GetComponentInChildren<HexRenderer>().height = Convert.ToSingle(MapHeights[x, y]) * height;
+                Vector3 pos = MapGrid.CellToWorld(new Vector3Int(x, y, 0));
+                GameObject generated = Instantiate(tilePrefabs[MapBiomes[x, y]], pos ,Quaternion.identity, _tileParents);
+                float newHeight = Convert.ToSingle(MapHeights[x, y]) * height;
+                generated.GetComponentInChildren<HexRenderer>().height = newHeight;
+                generated.GetComponentInChildren<BoxCollider>().size += Vector3.up * newHeight;
                 generated.SetActive(true);
             }
                 

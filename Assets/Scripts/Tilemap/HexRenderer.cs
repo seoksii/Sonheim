@@ -50,24 +50,6 @@ public class HexRenderer : MonoBehaviour
     {
         DrawMesh();
     }
-    
-    private void OnBecameVisible()
-    {
-        #if UNITY_EDITOR
-            if (Camera.current.name == "SceneCamera") 
-                return;
-        #endif
-        m_meshRenderer.enabled = true;
-    }
-
-    private void OnBecameInvisible()
-    {
-        #if UNITY_EDITOR
-            if (Camera.current.name == "SceneCamera") 
-                return;
-        #endif
-        m_meshRenderer.enabled = false;
-    }
 
     public void OnValidate()
     {
