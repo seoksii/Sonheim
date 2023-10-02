@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Status
 {
-    private int maxHealth;
-    public int MaxHealth
+    private float curHealth;
+    public float CurHealth
+    {
+        get
+        {
+            return curHealth;
+        }
+        set
+        {
+            curHealth = value;
+        }
+    }
+
+    private float maxHealth;
+    public float MaxHealth
     {
         get
         {
@@ -17,8 +30,8 @@ public class Status
         }
     }
 
-    private int stamina;
-    public int Stamina
+    private float stamina;
+    public float Stamina
     {
         get
         {
@@ -30,8 +43,8 @@ public class Status
         }
     }
 
-    private int hunger;
-    public int Hunger
+    private float hunger;
+    public float Hunger
     {
         get
         {
@@ -43,8 +56,8 @@ public class Status
         }
     }
 
-    private int thirst;
-    public int Thirst
+    private float thirst;
+    public float Thirst
     {
         get
         {
@@ -58,6 +71,7 @@ public class Status
 
     public Status(int _maxHealth, int _stamina, int _hunger, int _thirst)
     {
+        curHealth = _maxHealth;
         maxHealth = _maxHealth;
         stamina = _stamina;
         hunger = _hunger;
