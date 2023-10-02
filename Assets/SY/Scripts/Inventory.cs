@@ -306,7 +306,7 @@ public class Inventory : MonoBehaviour
         if (equips[0] != null) equips[0].isEquipped = false;
         equips[0] = selectedItem;
         // 플레이어측 장착 함수 필요. 
-
+        GameManager.Instance.Player.EquipWeapon(selectedItem.item.WeaponPrefab);
 
         UpdateUI();
         SelectItem(selectedItemIndex);
