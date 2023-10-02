@@ -1,27 +1,30 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TileMapGenerator : MonoBehaviour
 {
-    [SerializeField] Grid grid;
+    public Grid MapGrid;
     
-    [SerializeField] Blocks[] tilePrefabs;
-
+    [SerializeField] GameObject[] tilePrefabs;
+    [SerializeField] Transform _tileParents;
+    
     public string seed;
     public bool useRandomSeed;
     
-    [SerializeField] private Vector2Int size;
+    public Vector2Int size;
     [SerializeField, Range(0, 100)]
     private int normalBlockPercent;
     [SerializeField, Range(0, 100)]
     private int normalBiomePercent;
 
     [SerializeField] private int smoothingFactor;
+    [SerializeField] private float height;
     
     public int[,] MapHeights;
     public int[,] MapBiomes;
     
-    void Start()
+    void Awake()
     {
         GenerateMap();
         DrawMapTiles();
@@ -59,13 +62,11 @@ public class TileMapGenerator : MonoBehaviour
 
     void SmoothMap(int[,] map)
     {
-        int[,] newMap = new int[size.x, size.y];
-        
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
                 int neighbourDifferentTiles = GetSurroundingTiles(map, x, y);
-
+                
                 if (neighbourDifferentTiles > 4)
                     map[x, y] = 1;
                 else if (neighbourDifferentTiles < 4)
@@ -93,22 +94,14 @@ public class TileMapGenerator : MonoBehaviour
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 pos = grid.CellToWorld(new Vector3Int(x, y, 0));
-                Instantiate(tilePrefabs[MapBiomes[x, y]][MapHeights[x, y]], pos ,Quaternion.identity, gameObject.transform);
+                Vector3 pos = MapGrid.CellToWorld(new Vector3Int(x, y, 0));
+                GameObject generated = Instantiate(tilePrefabs[MapBiomes[x, y]], pos ,Quaternion.identity, _tileParents);
+                generated.GetComponentInChildren<HexRenderer>().height = Convert.ToSingle(MapHeights[x, y]) * height;
+                generated.SetActive(true);
             }
                 
     }
 }
 
-[Serializable]
-public class Blocks
-{
-    public GameObject normalBlock;
-    public GameObject highBlock;
 
-    public GameObject this[int i]
-    {
-        get { return (i == 0) ? normalBlock : highBlock; }
-    }
-}
 
