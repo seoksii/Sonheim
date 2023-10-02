@@ -32,7 +32,6 @@ public class Inventory : MonoBehaviour
     public ItemSlot[] equips;
 
     public GameObject inventoryPanel;
-    public Transform dropPosition;
 
     [Header("Selected Item")]
     [SerializeField] private ItemSlot selectedItem;
