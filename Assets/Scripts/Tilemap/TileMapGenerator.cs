@@ -96,7 +96,9 @@ public class TileMapGenerator : MonoBehaviour
             {
                 Vector3 pos = MapGrid.CellToWorld(new Vector3Int(x, y, 0));
                 GameObject generated = Instantiate(tilePrefabs[MapBiomes[x, y]], pos ,Quaternion.identity, _tileParents);
-                generated.GetComponentInChildren<HexRenderer>().height = Convert.ToSingle(MapHeights[x, y]) * height;
+                float newHeight = Convert.ToSingle(MapHeights[x, y]) * height;
+                generated.GetComponentInChildren<HexRenderer>().height = newHeight;
+                generated.GetComponentInChildren<BoxCollider>().size += Vector3.up * newHeight;
                 generated.SetActive(true);
             }
                 
