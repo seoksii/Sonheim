@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: "\uB2E4\uD589\uC774\uAC8C\uB3C4 \uB3C5\uC740 \uC5C6\uC2B5\uB2C8\uB2E4."
   Type: 2
   Icon: {fileID: -1009657348, guid: a8f4e4c2003c141858e019922a62ab4d, type: 3}
-  DropPrefab: {fileID: 919132149155446097, guid: a77ef44685a594d35a4538951f524e7c, type: 3}
+  DropPrefab: {fileID: 8379679490889295505, guid: f0529ea39a5984e8693bf06d9740c4ed, type: 3}
   IsStackable: 1
   MaxStackAmount: 99
   Consumables:
