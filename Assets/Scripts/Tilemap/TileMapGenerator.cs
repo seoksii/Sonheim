@@ -5,7 +5,7 @@ public class TileMapGenerator : MonoBehaviour
 {
     [SerializeField] Grid grid;
     
-    [SerializeField] Blocks[] tilePrefabs;
+    [SerializeField] GameObject[] tilePrefabs;
 
     public string seed;
     public bool useRandomSeed;
@@ -17,6 +17,7 @@ public class TileMapGenerator : MonoBehaviour
     private int normalBiomePercent;
 
     [SerializeField] private int smoothingFactor;
+    [SerializeField] private float height;
     
     public int[,] MapHeights;
     public int[,] MapBiomes;
@@ -65,7 +66,7 @@ public class TileMapGenerator : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 int neighbourDifferentTiles = GetSurroundingTiles(map, x, y);
-
+                
                 if (neighbourDifferentTiles > 4)
                     map[x, y] = 1;
                 else if (neighbourDifferentTiles < 4)
@@ -94,21 +95,13 @@ public class TileMapGenerator : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 Vector3 pos = grid.CellToWorld(new Vector3Int(x, y, 0));
-                Instantiate(tilePrefabs[MapBiomes[x, y]][MapHeights[x, y]], pos ,Quaternion.identity, gameObject.transform);
+                GameObject generated = Instantiate(tilePrefabs[MapBiomes[x, y]], pos ,Quaternion.identity, gameObject.transform);
+                generated.GetComponentInChildren<HexRenderer>().height = Convert.ToSingle(MapHeights[x, y]) * height;
+                generated.SetActive(true);
             }
                 
     }
 }
 
-[Serializable]
-public class Blocks
-{
-    public GameObject normalBlock;
-    public GameObject highBlock;
 
-    public GameObject this[int i]
-    {
-        get { return (i == 0) ? normalBlock : highBlock; }
-    }
-}
 

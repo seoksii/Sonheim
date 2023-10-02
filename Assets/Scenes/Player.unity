@@ -122,16 +122,11 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
---- !u!224 &17633183 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 799255775185971808, guid: 1175139ac75b6974bad8144807df9638, type: 3}
-  m_PrefabInstance: {fileID: 77060831}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &17633188 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6002223712668869446, guid: 1175139ac75b6974bad8144807df9638, type: 3}
-  m_PrefabInstance: {fileID: 77060831}
+  m_NavMeshData: {fileID: 23800000, guid: ef0729ae689edd842869b182fc43b98b, type: 2}
+--- !u!4 &97276498 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+  m_PrefabInstance: {fileID: 197322931}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
