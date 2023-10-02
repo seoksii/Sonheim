@@ -143,6 +143,7 @@ public class Inventory : MonoBehaviour
     public void ThrowItem(ItemData item)
     {
         Vector3 itemRespawnPosition = gameObject.transform.position + controller.direction;
+        itemRespawnPosition = itemRespawnPosition + new Vector3(0, 1, 0);
         itemManager.DropNewItem(itemRespawnPosition, item);
         Debug.Log("아이템을 던졌다. :  " + item.DisplayName);
     }
