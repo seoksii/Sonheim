@@ -14,47 +14,42 @@ public class CraftPanelUI : MonoBehaviour
 {
     public static CraftPanelUI instance;
 
-    public CraftRecipe[] craftRecipes;
-    public Inventory userInventory;
+    [HideInInspector] public Inventory userInventory;
+    [HideInInspector] public ItemSlot[] resources;
+    [HideInInspector] public ItemSlot[] craftBox;
 
+    [Header("Insert your recipes here")]
+    public CraftRecipe[] craftRecipes;
+
+    [Header("ResourcesPanel - SelectedItemInfo")]
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
-
     public GameObject addButton;
     public GameObject removeButton;
-    public GameObject craftButton;
-
-    // 조합대의 고유 아이템 공간임, 여기에 넣는 순간 플레이어 인벤토리에서 차감됨
-    [Header("current inputted items in crafting box")]
-    public ItemSlot[] craftBox;
-    public ItemSlot[] resources;
-    public CraftState craftBoxState;
-
-    [Header("need to connect")]
+    [Header("ResourcesPanel - ViewPort Slots")]
     public ItemSlotUI[] resourcesUI;
+    [Header("CraftPanel - CraftBox")]
+    public Image craftBoxBackground;
     public ItemSlotUI[] craftBoxUI;
-
-    [Header("Craft Result")]
     public ItemSlotUI craftBoxResultUI;
+    [Header("CraftPanel - ResultItemInfo")]
     public ItemSlotUI craftBoxResultUI2;
     public TextMeshProUGUI craftResultItemName;
     public TextMeshProUGUI craftResultItemDescription;
     public TextMeshProUGUI craftResultItemStatNames;
     public TextMeshProUGUI craftResultItemStatValues;
-
-    public Image craftBoxBackground;
-
-    public ItemSlot selectedItem;
-
+    [Header("CraftPanel - Recipes")]
+    public RecipeUI[] curRecipesUI;
+    public GameObject craftButton;
     [Header("Events")]
     public UnityEvent onOpenInventory;
     public UnityEvent onCloseInventory;
 
-    public Dictionary<ItemData, List<CraftRecipe>> recipeDictionary;
-    public List<CraftRecipe> curRecipesList;
-
-    public RecipeUI[] curRecipesUI;
-    public CraftRecipe selectedRecipe;
+    [HideInInspector] public Dictionary<ItemData, List<CraftRecipe>> recipeDictionary;
+    [HideInInspector] public List<CraftRecipe> curRecipesList;
+    [HideInInspector] public CraftRecipe selectedRecipe;
+    [HideInInspector] public CraftState craftBoxState;
+    [HideInInspector] public ItemSlot selectedItem;
 
     private void Awake()
     {
