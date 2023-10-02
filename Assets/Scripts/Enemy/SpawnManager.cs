@@ -8,6 +8,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab2;
     public GameObject enemyPrefab3;
 
+
     public float spawnInterval = 5f;
 
     private Transform skeletonSpawner;
