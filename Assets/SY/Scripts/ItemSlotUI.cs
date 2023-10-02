@@ -7,36 +7,38 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour
 {
-    public Button button;
-    public Image icon;
-    public TextMeshProUGUI quantityText;
-    private ItemSlot curSlot;
-    private Outline outline;
 
     public int myindex;
-    public bool isEquipped;
+    public Button button;
+    private Outline outline;
+
+    public Image icon;
+    public TextMeshProUGUI quantityText;
+    public ItemSlot curSlot;
+    public Image background;
+
     private void Awake()
     {
+        background = GetComponent<Image>();
         outline = GetComponent<Outline>();
     }
 
-    private void OnEnable()
-    {
-        outline.enabled = isEquipped;
-    }
 
     public void Set(ItemSlot slot)
     {
-        Debug.Log(myindex);
+        if (slot == null || slot.item == null)
+        {
+            Clear();
+            return;
+        }
         curSlot = slot;
         icon.gameObject.SetActive(true);
-        icon.sprite = slot.item.icon;
+        icon.sprite = slot.item.Icon;
         quantityText.text = slot.quantity > 1 ? slot.quantity.ToString() : string.Empty;
 
-        if ( outline != null )
-        {
-            outline.enabled = isEquipped;
-        }
+        if (curSlot.isEquipped) { background.color = Color.yellow; }
+        else { background.color = Color.white; }
+        if (outline != null) { outline.enabled = curSlot.isEquipped; }
     }
 
     public void Clear()
@@ -44,12 +46,33 @@ public class ItemSlotUI : MonoBehaviour
         curSlot = null;
         icon.gameObject.SetActive(false);
         quantityText.text = string.Empty;
+
+        background.color = Color.white;
+        if (outline != null) { outline.enabled = false; }
     }
 
     public void OnButtonClick()
     {
-        int i = myindex;
-        Debug.Log("slot selected : " + i.ToString());
-        Inventory.instance.SelectItem(myindex);
+        if (Inventory.instance.IsOpen())
+        {
+            Inventory.instance.SelectItem(myindex);
+        }
+        if (CraftPanelUI.instance.IsOpen())
+        {
+            CraftPanelUI.instance.SelectItem(curSlot);
+        }
+    }
+
+    public void SetButton()
+    {
+        if (curSlot != null)
+        {
+            if (curSlot.item != null)
+            {
+                button.enabled = true;
+                return;
+            }
+        }
+        button.enabled = false;
     }
 }
