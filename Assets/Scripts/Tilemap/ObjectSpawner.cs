@@ -17,6 +17,7 @@ public class ObjectSpawner : MonoBehaviour
     private void Start()
     {
         SpawnInitialObjects();
+        SpawnMonsterSpawners();
     }
 
     void SpawnInitialObjects()
@@ -46,6 +47,37 @@ public class ObjectSpawner : MonoBehaviour
         
     }
 
+    void SpawnMonsterSpawners()
+    {
+        Vector2Int size = _tileMapGenerator.size;
+        System.Random psuedoRandom = new System.Random(_tileMapGenerator.seed.GetHashCode());
+        
+        int gridX, gridY;
+        do
+        {
+            gridX = psuedoRandom.Next(1, size.x - 1);
+            gridY = psuedoRandom.Next(1, size.y - 1);
+        } while (!GetAvailable(gridX, gridY, 0));
+        
+        BindToCell(GameObject.Find("SkeletonSpawner").transform, gridX, gridY);
+        
+        do
+        {
+            gridX = psuedoRandom.Next(1, size.x - 1);
+            gridY = psuedoRandom.Next(1, size.y - 1);
+        } while (!GetAvailable(gridX, gridY, 1));
+        
+        BindToCell(GameObject.Find("CactusSpawner").transform, gridX, gridY);
+        
+        do
+        {
+            gridX = psuedoRandom.Next(1, size.x - 1);
+            gridY = psuedoRandom.Next(1, size.y - 1);
+        } while (!GetAvailable(gridX, gridY, 1));
+        
+        BindToCell(GameObject.Find("SpiderSpawner").transform, gridX, gridY);
+    }
+
     public void SpawnObject(GameObject prefab, int gridX, int gridY)
     {
         Grid grid = _tileMapGenerator.MapGrid;
@@ -53,6 +85,13 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 pos = grid.CellToWorld(new Vector3Int(gridX, gridY, 0));
         GameObject generated = Instantiate(prefab, pos, Quaternion.identity, _objectParents);
         MapObjects[gridX, gridY] = generated;
+    }
+
+    public void BindToCell(Transform target, int gridX, int gridY)
+    {
+        target.position = _tileMapGenerator.MapGrid.CellToWorld(new Vector3Int(gridX, gridY, 0));
+        MapObjects[gridX, gridY] = target.gameObject;
+        target.parent = _objectParents;
     }
 
     public Grid GetCurrentGrid()
