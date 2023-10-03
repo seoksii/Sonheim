@@ -5,10 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Status status = new Status(100, 100, 100, 100);
-    public Transform weaponPoint;
+    public GameObject weaponPoint;
 
-    public void EquipWeapon(GameObject weapon)
+    public void EquipWeapon(GameObject weaponPrefab)
     {
-        Instantiate(weapon).transform.parent = weaponPoint;
+        GameObject weapon = Instantiate(weaponPrefab) as GameObject;
+        weapon.transform.SetParent(weaponPoint.transform, false);
     }
 }

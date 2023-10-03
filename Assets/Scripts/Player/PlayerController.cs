@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Inventory!");
         if (context.phase == InputActionPhase.Started)
         {
-            ToggleCursor(true);
+            //ToggleCursor(true);
             Inventory.instance.Toggle();
         }
 

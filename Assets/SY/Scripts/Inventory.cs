@@ -73,6 +73,10 @@ public class Inventory : MonoBehaviour
         else
         {
             equips = new ItemSlot[3];
+            for (int i = 0; i < equips.Length; i++)
+            {
+                equips[i] = new ItemSlot();
+            }
         }
 
         controller = GetComponent<PlayerController>();
@@ -89,11 +93,12 @@ public class Inventory : MonoBehaviour
             uiSlots[i].myindex = i;
             uiSlots[i].Clear();
         }
+
         itemManager = ItemManager._instance;
 
         ClearSelectedItemWindow();
     }
-    
+
     public void Toggle()
     {
         if (inventoryPanel.activeInHierarchy)
@@ -295,6 +300,7 @@ public class Inventory : MonoBehaviour
 
     public void UnequipHere()
     {
+
         selectedItem.isEquipped = false;
         if (equips[0] == selectedItem) equips[0] = null;
         // 플레이어측 장착해제 함수 필요.
