@@ -4,7 +4,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     private TileMapGenerator _tileMapGenerator;
     
-    [SerializeField] private GameObject[] _objectPrefabs;
+    public GameObject[] _objectPrefabs;
     [SerializeField] Transform _objectParents;
     [SerializeField, Range(0, 100)] private int _density; 
 
@@ -53,5 +53,27 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 pos = grid.CellToWorld(new Vector3Int(gridX, gridY, 0));
         GameObject generated = Instantiate(prefab, pos, Quaternion.identity, _objectParents);
         MapObjects[gridX, gridY] = generated;
+    }
+
+    public Grid GetCurrentGrid()
+    {
+        return _tileMapGenerator.MapGrid;
+    }
+
+    public int GetCurrentBiome(int gridX, int gridY)
+    {
+        return _tileMapGenerator.MapBiomes[gridX, gridY];
+    }
+
+    public bool GetAvailable(int gridX, int gridY)
+    {
+        if (_tileMapGenerator.MapHeights[gridX, gridY] != 0) return false;
+        if (MapObjects[gridX, gridY] != null) return false;
+        return true;
+    }
+
+    public bool GetAvailable(int gridX, int gridY, int biome)
+    {
+        return GetAvailable(gridX, gridY) && _tileMapGenerator.MapBiomes[gridX, gridY] == biome;
     }
 }
