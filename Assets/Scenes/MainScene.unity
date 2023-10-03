@@ -5702,7 +5702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519373292242588526, guid: d65b968de922ea24f8382ffad9474796, type: 3}
       propertyPath: craftRecipes.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7519373292242588526, guid: d65b968de922ea24f8382ffad9474796, type: 3}
       propertyPath: craftRecipes.Array.data[0]
@@ -5724,6 +5724,14 @@ PrefabInstance:
       propertyPath: craftRecipes.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: c38506623566f3d4d804c17669feb4ff, type: 2}
+    - target: {fileID: 7519373292242588526, guid: d65b968de922ea24f8382ffad9474796, type: 3}
+      propertyPath: craftRecipes.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: eb7ee57d4b414844c9415a9b72bf0e6e, type: 2}
+    - target: {fileID: 7519373292242588526, guid: d65b968de922ea24f8382ffad9474796, type: 3}
+      propertyPath: craftRecipes.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 94beeaeb27500e7419421a84f378b7a9, type: 2}
     - target: {fileID: 7519373292242588526, guid: d65b968de922ea24f8382ffad9474796, type: 3}
       propertyPath: onOpenInventory.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -7952,6 +7960,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a6d32a27c361743bf8ed176f1a20c4cf, type: 2}
   - {fileID: 11400000, guid: 5c411934b44ed4ac4a294f29a13f387a, type: 2}
   - {fileID: 11400000, guid: 1a46314ff4e9b4ecf8111e946fdf1719, type: 2}
+  - {fileID: 11400000, guid: 77fa8e47f47fb2144b2afb347989e79e, type: 2}
+  - {fileID: 11400000, guid: 4ca12ddbcae8c4c45ac9a58732b61924, type: 2}
 --- !u!114 &1556435580
 MonoBehaviour:
   m_ObjectHideFlags: 0
