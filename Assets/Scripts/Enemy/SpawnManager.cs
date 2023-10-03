@@ -30,19 +30,19 @@ public class SpawnManager : MonoBehaviour
     {
         while (enemyCount < 5)
         {
+            yield return new WaitForSeconds(spawnInterval);
+            
             Vector3 spawnPosition1 = skeletonSpawner.position;
-            GameObject npcInstance1 = Instantiate(enemyPrefab1, spawnPosition1, Quaternion.identity);
+            GameObject npcInstance1 = Instantiate(enemyPrefab1, spawnPosition1 + Vector3.up, Quaternion.identity);
 
             Vector3 spawnPosition2 = cactusSpawner.position;
-            GameObject npcInstance2 = Instantiate(enemyPrefab2, spawnPosition2, Quaternion.identity);
+            GameObject npcInstance2 = Instantiate(enemyPrefab2, spawnPosition2 + Vector3.up, Quaternion.identity);
 
             Vector3 spawnPosition3 = spiderSpawner.position;
-            GameObject npcInstance3 = Instantiate(enemyPrefab3, spawnPosition3, Quaternion.identity);
+            GameObject npcInstance3 = Instantiate(enemyPrefab3, spawnPosition3 + Vector3.up, Quaternion.identity);
 
 
             enemyCount++;
-
-            yield return new WaitForSeconds(spawnInterval);
         }
     }
 }
