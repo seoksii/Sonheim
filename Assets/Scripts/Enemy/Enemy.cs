@@ -44,12 +44,14 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
 
     public float fieldOfView = 120f;
 
+    private CapsuleCollider coll;
     private NavMeshAgent agent;
     private Animator animator;
     private SkinnedMeshRenderer[] meshRenderers;
 
     private void Awake()
     {
+        coll = GetComponent<CapsuleCollider>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -253,5 +255,21 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
         yield return new WaitForSeconds(0.1f);
         for (int x = 0; x < meshRenderers.Length; x++)
             meshRenderers[x].material.color = Color.white;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Weapon")
+        {
+            Weapon weapon = other.GetComponent<Weapon>();
+            if (weapon.type == Weapon.Type.Club)
+            {
+                TakePhysicalDamage(weapon.damage);
+            }
+            else
+            {
+                TakePhysicalDamage(weapon.damage / 2);
+            }
+        }
     }
 }

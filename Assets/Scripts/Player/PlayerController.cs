@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
         {
             if (canAttack && !isSprint)
             {
+                if (GameManager.Instance.Player.weapon != null)
+                {
+                    GameManager.Instance.Player.weapon.Use();
+                }
                 _animator.SetTrigger("DoAttack");
                 attackDelay = 0;
             }
