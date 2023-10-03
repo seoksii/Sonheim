@@ -195,5 +195,13 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.Player.status.Stamina < 100) GameManager.Instance.Player.status.Stamina += 5;
     }
 
-
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 7) // Interactable
+        {
+            GameObject item = other.gameObject;
+            Inventory.instance.AddItem(item.GetComponent<ItemObject>().item);
+            Destroy(other.gameObject);
+        }
+    }
 }
