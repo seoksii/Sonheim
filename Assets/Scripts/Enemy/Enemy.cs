@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
     public int health;
     public float walkSpeed;
     public float runSpeed;
-    //public ItemData[] dropOnDeath;  // related with item
+    public ItemData[] dropOnDeath; 
 
     [Header("AI")]
     private AIState aiState;
@@ -104,6 +104,12 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
             {
                 SetState(AIState.Fleeing);
             }
+
+            if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) > 10f)
+            {
+                SetState(AIState.Wandering);
+            }
+
         }
         else
         {
@@ -238,12 +244,10 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
 
     void Die()
     {
-        // related with item
-        //for (int x = 0; x < dropOnDeath.Length; x++) 
-        //{
-        //    Instantiate(dropOnDeath[x].dropPrefab, transform.position + Vector3.up * 2, Quaternion.identity);
-        //}
-
+        Vector3 dropPosition = gameObject.transform.position;
+        dropPosition.y += 2;
+        for (int i = 0; i < dropOnDeath.Length; i++)
+            ItemManager._instance.DropNewItem(dropPosition, dropOnDeath[i]);
         Destroy(gameObject);
     }
 
