@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
     public float attackRate;
     private float lastAttackTime;
     public float attackDistance;
+    public float attackSpeed;
+    public CapsuleCollider attackArea;
 
     private float playerDistance;
 
@@ -120,8 +122,18 @@ public class Enemy : MonoBehaviour /*, IDamagable*/
                 //PlayerController.instance.GetComponent<IDamagable>().TakePhysicalDamage(damage);
                 animator.speed = 1;
                 animator.SetTrigger("Attack");
+                StartCoroutine("Attack");
             }
         }
+    }
+
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(attackSpeed);
+        attackArea.enabled = true;
+
+        yield return new WaitForSeconds(0.3f);
+        attackArea.enabled = false;
     }
 
     private void PassiveUpdate()

@@ -26,6 +26,13 @@ public class Player : MonoBehaviour
     private float timeFromLastStaminaChanged;
     private float timeFromLastThirstChanged;
 
+    private MeshRenderer[] meshRenderers;
+
+    private void Awake()
+    {
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
+    }
+
     private void Start()
     {
         isHpChangable = true;
@@ -116,6 +123,10 @@ public class Player : MonoBehaviour
     {
         if (isHpChangable)
         {
+            if (value < 0f)
+            {
+                StartCoroutine("DamageFlash");
+            }
             status.CurHealth += value;
             timeFromLastHpChanged = 0f;
             isHpChangable = false;
@@ -126,6 +137,10 @@ public class Player : MonoBehaviour
         if (hasDelay) { AddHp(value); }
         else
         {
+            if (value < 0f)
+            {
+                StartCoroutine("DamageFlash");
+            }
             status.CurHealth += value;
         }
     }
@@ -166,5 +181,25 @@ public class Player : MonoBehaviour
     public void AddMaxHp(float value)
     {
         status.MaxHealth += value;
+    }
+
+    IEnumerator DamageFlash()
+    {
+        for (int x = 0; x < meshRenderers.Length; x++)
+            meshRenderers[x].material.color = new Color(1.0f, 0.6f, 0.6f);
+
+        yield return new WaitForSeconds(0.1f);
+        for (int x = 0; x < meshRenderers.Length; x++)
+            meshRenderers[x].material.color = Color.white;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy Attack")
+        {
+            Enemy enemy = other.GetComponentInParent<Enemy>();
+            AddHp((float)enemy.damage * -1f);
+            Debug.Log(status.CurHealth);
+        }
     }
 }
