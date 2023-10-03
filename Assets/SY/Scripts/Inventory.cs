@@ -217,7 +217,7 @@ public class Inventory : MonoBehaviour
         useButton.SetActive(selectedItem.item.Type == ItemType.Consumable);
         equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !slots[index].isEquipped);
         unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && slots[index].isEquipped);
-        placeButton.SetActive(selectedItem.item.DisplayName == "돌멩이" || selectedItem.item.DisplayName == "나무");
+        placeButton.SetActive(selectedItem.item.Type == ItemType.Installable);
         dropButton.SetActive(true);
     }
     public void ClearSelectedItemWindow()

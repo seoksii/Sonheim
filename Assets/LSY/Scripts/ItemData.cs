@@ -7,7 +7,8 @@ public enum ItemType
 {
     Resource,
     Equipable,
-    Consumable
+    Consumable,
+    Installable
 }
 
 public enum ConsumableType
@@ -36,6 +37,7 @@ public class ItemData : ScriptableObject
     public Sprite Icon;
     public GameObject DropPrefab;
     public GameObject WeaponPrefab;
+    public GameObject SetPrefab;
 
     [Header("Stacking")]
     public bool IsStackable;
