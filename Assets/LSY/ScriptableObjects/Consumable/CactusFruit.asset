@@ -16,7 +16,7 @@ MonoBehaviour:
   Description: "\uBD88\uC30D\uD55C \uC120\uC778\uC7A5..."
   Type: 2
   Icon: {fileID: 21300000, guid: 3508f8b9fd7834caf87db0be579908f2, type: 3}
-  DropPrefab: {fileID: 0}
+  DropPrefab: {fileID: 2886496880590258830, guid: db47e0c2d379c4101b87ca4a1d862086, type: 3}
   WeaponPrefab: {fileID: 0}
   IsStackable: 1
   MaxStackAmount: 99
