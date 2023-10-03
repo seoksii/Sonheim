@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     {
         GameObject _weapon = Instantiate(weaponPrefab) as GameObject;
         _weapon.transform.SetParent(weaponPoint.transform, false);
-        curEquipedWeapon = weapon;
+        curEquipedWeapon = weaponPrefab;
 
         weapon = _weapon.GetComponent<Weapon>();
     }
