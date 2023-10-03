@@ -101,6 +101,7 @@ MonoBehaviour:
   health: 6
   walkSpeed: 1
   runSpeed: 2
+  dropOnDeath: []
   detectDistance: 5
   safeDistance: 8
   minWanderDistance: 5
@@ -110,6 +111,7 @@ MonoBehaviour:
   damage: 5
   attackRate: 1.5
   attackDistance: 2
+  attackArea: {fileID: 0}
   fieldOfView: 120
 --- !u!195 &771844353661017981
 NavMeshAgent:
