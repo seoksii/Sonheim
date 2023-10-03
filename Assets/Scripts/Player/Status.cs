@@ -102,7 +102,6 @@ public class Status
 
     public void CallStatusChangedEvent()
     {
-        Debug.Log("Status 변함");
         OnStatusChanged?.Invoke(this);
     }
 }

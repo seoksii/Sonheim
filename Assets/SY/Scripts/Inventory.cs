@@ -45,6 +45,7 @@ public class Inventory : MonoBehaviour
     public GameObject equipButton;
     public GameObject unequipButton;
     public GameObject dropButton;
+    public GameObject placeButton;
 
     private int curEquipIndex;
     private Player player;
@@ -216,6 +217,7 @@ public class Inventory : MonoBehaviour
         useButton.SetActive(selectedItem.item.Type == ItemType.Consumable);
         equipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && !slots[index].isEquipped);
         unequipButton.SetActive(selectedItem.item.Type == ItemType.Equipable && slots[index].isEquipped);
+        placeButton.SetActive(selectedItem.item.DisplayName == "돌멩이" || selectedItem.item.DisplayName == "나무");
         dropButton.SetActive(true);
     }
     public void ClearSelectedItemWindow()
@@ -231,6 +233,7 @@ public class Inventory : MonoBehaviour
         equipButton.SetActive(false);
         unequipButton.SetActive(false);
         dropButton.SetActive(false);
+        placeButton.SetActive(false);
     }
 
     public void OnUseButton()
@@ -269,6 +272,12 @@ public class Inventory : MonoBehaviour
         {
             UnequipHere();
         }
+    }
+
+    public void OnPlaceButton()
+    {
+        Debug.Log("여기에 필요한 기능 넣으시면 될것 같습니다.");
+        // 아직 미구현
     }
 
     public void OnDropButton()

@@ -18,7 +18,6 @@ public class HUD_Guages : MonoBehaviour
 
     public void OnStatusChanged(Status newStatus)
     {
-        Debug.Log("OnstatusChanged 함수 호출 되는거 맞아?"); 
         Vector2 hp = hpGuageFill.sizeDelta;
         Vector2 stamina = staminaGuageFill.sizeDelta;
         Vector2 hunger = hungerGuageFill.sizeDelta;
