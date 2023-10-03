@@ -94,10 +94,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4710902602027048556}
   - component: {fileID: 8021721433250571092}
+  - component: {fileID: 7418900518095441225}
   - component: {fileID: 4247435611592956412}
   m_Layer: 7
   m_Name: Weapon StonePickaxe
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +117,7 @@ Transform:
   m_Children:
   - {fileID: 1743796558645736747}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8021721433250571092
 MonoBehaviour:
@@ -131,6 +132,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: bedcdbd1046a74fc69e1bc7b0d2cd091, type: 2}
+--- !u!114 &7418900518095441225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6167159093079007157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8338631a32f921a469b05cdbcddcb980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  damage: 2
+  attackArea: {fileID: 4247435611592956412}
 --- !u!65 &4247435611592956412
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,7 +164,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 14, y: 3, z: 3}
   m_Center: {x: 0, y: 15.5, z: 0}
