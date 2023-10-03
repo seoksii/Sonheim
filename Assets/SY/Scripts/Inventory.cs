@@ -148,7 +148,7 @@ public class Inventory : MonoBehaviour
     public void ThrowItem(ItemData item)
     {
         Vector3 itemRespawnPosition = gameObject.transform.position + controller.direction;
-        itemRespawnPosition = itemRespawnPosition + new Vector3(0, 1, 0);
+        itemRespawnPosition = itemRespawnPosition + new Vector3(0, 1, -1);
         itemManager.DropNewItem(itemRespawnPosition, item);
         Debug.Log("아이템을 던졌다. :  " + item.DisplayName);
     }
@@ -302,13 +302,12 @@ public class Inventory : MonoBehaviour
     {
 
         selectedItem.isEquipped = false;
-        if (equips[0] == selectedItem) equips[0] = null;
-        // 플레이어측 장착해제 함수 필요.
-        // 만약 전체 장착정보가 필요하면 ItemSlot[] equip 을 이용
-        // 개별 아이템 정보가 필요하면 equip[0].item => ItemData 받을수 잇음 무기,도구
-        // 0 -> 도구 , 1 -> 상의 , 2 -> 하의 , 3 -> 신발 예정이었는데.. 아직 0번밖에 없음 ㅋㅋ
-        
-        
+        if (equips[0] == selectedItem)
+        {
+            GameManager.Instance.Player.UnEquipWeapon(equips[0].item.WeaponPrefab);
+            equips[0] = null;
+        }
+
 
         UpdateUI();
         SelectItem(selectedItemIndex);
@@ -319,7 +318,7 @@ public class Inventory : MonoBehaviour
         selectedItem.isEquipped = true;
         if (equips[0] != null) equips[0].isEquipped = false;
         equips[0] = selectedItem;
-        // 플레이어측 장착 함수 필요. 
+
         GameManager.Instance.Player.EquipWeapon(selectedItem.item.WeaponPrefab);
 
         UpdateUI();
