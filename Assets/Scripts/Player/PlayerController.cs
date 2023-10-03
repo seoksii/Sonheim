@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (isSprint)
         {
             if (GameManager.Instance.Player.status.Stamina > 0) GameManager.Instance.Player.status.Stamina -= 10f * Time.deltaTime;
+            Debug.Log(GameManager.Instance.Player.status.Stamina);
         }
         else
         {

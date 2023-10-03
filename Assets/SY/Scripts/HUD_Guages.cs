@@ -13,11 +13,12 @@ public class HUD_Guages : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.Player.status.StatusChanged += OnStatusChanged;
+        GameManager.Instance.Player.status.OnStatusChanged += OnStatusChanged;
     }
 
     public void OnStatusChanged(Status newStatus)
     {
+        Debug.Log("OnstatusChanged 함수 호출 되는거 맞아?"); 
         Vector2 hp = hpGuageFill.sizeDelta;
         Vector2 stamina = staminaGuageFill.sizeDelta;
         Vector2 hunger = hungerGuageFill.sizeDelta;
@@ -26,11 +27,11 @@ public class HUD_Guages : MonoBehaviour
         hp.x = (newStatus.CurHealth / newStatus.MaxHealth) * 300f;
         hpGuageFill.sizeDelta = hp;
         stamina.x = newStatus.Stamina * 3f;
-        hpGuageFill.sizeDelta = hp;
+        staminaGuageFill.sizeDelta = stamina;
         hunger.x = newStatus.Hunger * 3f;
-        hpGuageFill.sizeDelta = hp;
+        hungerGuageFill.sizeDelta = hunger;
         thirsty.x = newStatus.Thirst * 3f;
-        hpGuageFill.sizeDelta = hp;
+        thirstyGuageFill.sizeDelta = thirsty;
 
     }
 }

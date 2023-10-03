@@ -6,7 +6,7 @@ using UnityEngine;
 public class Status
 {
 
-    public event Action<Status> StatusChanged;
+    public event Action<Status> OnStatusChanged;
 
     private float curHealth;
     public float CurHealth
@@ -32,7 +32,7 @@ public class Status
         }
         set
         {
-            if (curHealth != value) { CallStatusChangedEvent(); }
+            if (maxHealth != value) { CallStatusChangedEvent(); }
             maxHealth = value;
         }
     }
@@ -46,7 +46,7 @@ public class Status
         }
         set
         {
-            if (curHealth != value) { CallStatusChangedEvent(); }
+            if (stamina != value) { CallStatusChangedEvent(); }
             stamina = value;
         }
     }
@@ -60,8 +60,14 @@ public class Status
         }
         set
         {
-            if (curHealth != value) { CallStatusChangedEvent(); }
+            if (Hunger != value) { CallStatusChangedEvent(); }
             hunger = value;
+            if (hunger >= 100f) hunger = 100f;
+            if (hunger < 0f)
+            {
+                curHealth += hunger;
+                hunger = 0f;
+            }
         }
     }
 
@@ -74,8 +80,14 @@ public class Status
         }
         set
         {
-            if (curHealth != value) { CallStatusChangedEvent(); }
+            if (thirst != value) { CallStatusChangedEvent(); }
             thirst = value;
+            if (thirst >= 100f) thirst = 100f;
+            if (thirst < 0f)
+            {
+                curHealth += thirst;
+                thirst = 0f;
+            }
         }
     }
 
@@ -90,6 +102,7 @@ public class Status
 
     public void CallStatusChangedEvent()
     {
-        StatusChanged?.Invoke(this);
+        Debug.Log("Status 변함");
+        OnStatusChanged?.Invoke(this);
     }
 }
