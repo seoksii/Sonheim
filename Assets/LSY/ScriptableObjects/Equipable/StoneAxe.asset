@@ -18,6 +18,7 @@ MonoBehaviour:
   Type: 1
   Icon: {fileID: 21300000, guid: a7754ccbcd8da40e898cc8882368cd9b, type: 3}
   DropPrefab: {fileID: 5589194058829005872, guid: a70a83a0472844e95ab80c8f8f719b3e, type: 3}
+  WeaponPrefab: {fileID: 8092120825503270928, guid: c1fc0148f8f9bc74f94e55254dbcba0a, type: 3}
   IsStackable: 0
   MaxStackAmount: 0
   Consumables: []

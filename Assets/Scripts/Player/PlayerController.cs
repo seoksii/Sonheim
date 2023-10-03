@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public LayerMask groundLayerMask;
 
-    private Vector3 direction;
+    public Vector3 direction;
 
     private Rigidbody _rigidbody;
     private Animator _animator;
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(canAttack);
+        //Debug.Log(canAttack);
         Move();
         Attack();
     }
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Inventory!");
         if (context.phase == InputActionPhase.Started)
         {
-            ToggleCursor(true);
+            //ToggleCursor(true);
             Inventory.instance.Toggle();
         }
 
@@ -139,6 +139,10 @@ public class PlayerController : MonoBehaviour
         {
             if (canAttack && !isSprint)
             {
+                if (GameManager.Instance.Player.weapon != null)
+                {
+                    GameManager.Instance.Player.weapon.Use();
+                }
                 _animator.SetTrigger("DoAttack");
                 attackDelay = 0;
             }
@@ -191,5 +195,13 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.Player.status.Stamina < 100) GameManager.Instance.Player.status.Stamina += 5;
     }
 
-
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 7) // Interactable
+        {
+            GameObject item = other.gameObject;
+            Inventory.instance.AddItem(item.GetComponent<ItemObject>().item);
+            Destroy(other.gameObject);
+        }
+    }
 }

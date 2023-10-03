@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Status
 {
+
+    public event Action<Status> StatusChanged;
+
     private float curHealth;
     public float CurHealth
     {
@@ -13,7 +17,9 @@ public class Status
         }
         set
         {
+            if (curHealth != value) { CallStatusChangedEvent(); }
             curHealth = value;
+            
         }
     }
 
@@ -26,6 +32,7 @@ public class Status
         }
         set
         {
+            if (curHealth != value) { CallStatusChangedEvent(); }
             maxHealth = value;
         }
     }
@@ -39,6 +46,7 @@ public class Status
         }
         set
         {
+            if (curHealth != value) { CallStatusChangedEvent(); }
             stamina = value;
         }
     }
@@ -52,6 +60,7 @@ public class Status
         }
         set
         {
+            if (curHealth != value) { CallStatusChangedEvent(); }
             hunger = value;
         }
     }
@@ -65,6 +74,7 @@ public class Status
         }
         set
         {
+            if (curHealth != value) { CallStatusChangedEvent(); }
             thirst = value;
         }
     }
@@ -76,5 +86,10 @@ public class Status
         stamina = _stamina;
         hunger = _hunger;
         thirst = _thirst;
+    }
+
+    public void CallStatusChangedEvent()
+    {
+        StatusChanged?.Invoke(this);
     }
 }
