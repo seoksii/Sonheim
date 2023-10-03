@@ -278,6 +278,9 @@ public class Inventory : MonoBehaviour
     {
         Debug.Log("여기에 필요한 기능 넣으시면 될것 같습니다.");
         // 아직 미구현
+
+        GameObject prefab = selectedItem.item.InstallablePrefab;
+        // 이 prefab이 현재 그 kenny에 있는 fence에 mesh콜라이더 붙인 프리팹입니다.
     }
 
     public void OnDropButton()

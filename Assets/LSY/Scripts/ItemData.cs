@@ -37,7 +37,7 @@ public class ItemData : ScriptableObject
     public Sprite Icon;
     public GameObject DropPrefab;
     public GameObject WeaponPrefab;
-    public GameObject SetPrefab;
+    public GameObject InstallablePrefab;
 
     [Header("Stacking")]
     public bool IsStackable;
