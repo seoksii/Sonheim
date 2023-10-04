@@ -61,6 +61,7 @@ public class Inventory : MonoBehaviour
 
     private ItemManager itemManager;
     private PlayerController controller;
+    private PlayerObjectInstaller installer;
 
     private void Awake()
     {
@@ -80,6 +81,7 @@ public class Inventory : MonoBehaviour
         }
 
         controller = GetComponent<PlayerController>();
+        installer = GetComponent<PlayerObjectInstaller>();
     }
 
     private void Start()
@@ -278,11 +280,10 @@ public class Inventory : MonoBehaviour
 
     public void OnPlaceButton()
     {
-        Debug.Log("여기에 필요한 기능 넣으시면 될것 같습니다.");
-        // 아직 미구현
-
         GameObject prefab = selectedItem.item.InstallablePrefab;
-        // 이 prefab이 현재 그 kenny에 있는 fence에 mesh콜라이더 붙인 프리팹입니다.
+
+        bool isSuccess = installer.InstallObject(prefab);
+        if (isSuccess) RemoveSelectedItem();
     }
 
     public void OnDropButton()
