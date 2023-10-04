@@ -63,7 +63,6 @@ public class Inventory : MonoBehaviour
     private PlayerController controller;
     private PlayerObjectInstaller installer;
 
-
     private void Awake()
     {
         instance = this;
@@ -240,25 +239,28 @@ public class Inventory : MonoBehaviour
 
     public void OnUseButton()
     {
-        //if (selectedItem.item.itemType == ITEMTYPE_SY.CONSUMABLE)
-        //{
-        //    for( int i= 0; i < selectedItem.item.consumables.Length; i++)
-        //    {
-        //        switch (selectedItem.item.consumables[i].type)
-        //        {
-        //            case ConsumableType.Health:
-        //                // 플레이어쪽 살펴보기
-        //                break;
+        if (selectedItem.item.Type == ItemType.Consumable)
+        {
+            for (int i = 0; i < selectedItem.item.Consumables.Length; i++)
+            {
+                switch (selectedItem.item.Consumables[i].Type)
+                {
+                    case ConsumableType.Hunger:
+                        player.AddHunger((float)selectedItem.item.Consumables[i].Value,false);
+                        break;
 
-        //            case ConsumableType.Hunger:
-        //                // 플레이어쪽 살펴보기
-        //                break;
-        //            case ConsumableType.Thirsty:
-        //                // 플레이어쪽 살펴보기
-        //                break;
-        //        }
-        //    }
-        //}
+                    case ConsumableType.Thirst:
+                        player.AddThirst((float)selectedItem.item.Consumables[i].Value,false);
+                        break;
+                    case ConsumableType.Health:
+                        player.AddHp((float)selectedItem.item.Consumables[i].Value, false);
+                        break;
+                    case ConsumableType.Stamina:
+                        player.AddStamina((float)selectedItem.item.Consumables[i].Value, false);
+                        break;
+                }
+            }
+        }
         RemoveSelectedItem();
     }
     public void OnEquipButton()
@@ -317,7 +319,7 @@ public class Inventory : MonoBehaviour
         selectedItem.isEquipped = false;
         if (equips[0] == selectedItem)
         {
-            GameManager.Instance.Player.UnEquipWeapon(equips[0].item.WeaponPrefab);
+            player.UnEquipWeapon(equips[0].item.WeaponPrefab);
             equips[0] = null;
         }
 
@@ -332,7 +334,7 @@ public class Inventory : MonoBehaviour
         if (equips[0] != null) equips[0].isEquipped = false;
         equips[0] = selectedItem;
 
-        GameManager.Instance.Player.EquipWeapon(selectedItem.item.WeaponPrefab);
+        player.EquipWeapon(selectedItem.item.WeaponPrefab);
 
         UpdateUI();
         SelectItem(selectedItemIndex);
