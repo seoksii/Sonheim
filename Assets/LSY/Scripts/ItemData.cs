@@ -14,9 +14,9 @@ public enum ItemType
 public enum ConsumableType
 {
     Hunger,
-    Thirst
-    // Health
-    // Stamina
+    Thirst,
+    Health,
+    Stamina
     // Immune, Resistance (Fire, Cold, Poison) 
 }
 

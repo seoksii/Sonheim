@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Status
 {
 
     public event Action<Status> OnStatusChanged;
 
-    private float curHealth;
+    [SerializeField] private float curHealth;
     public float CurHealth
     {
         get
@@ -23,7 +24,7 @@ public class Status
         }
     }
 
-    private float maxHealth;
+    [SerializeField] private float maxHealth;
     public float MaxHealth
     {
         get
@@ -37,7 +38,7 @@ public class Status
         }
     }
 
-    private float stamina;
+    [SerializeField] private float stamina;
     public float Stamina
     {
         get
@@ -51,7 +52,7 @@ public class Status
         }
     }
 
-    private float hunger;
+    [SerializeField] private float hunger;
     public float Hunger
     {
         get
@@ -71,7 +72,7 @@ public class Status
         }
     }
 
-    private float thirst;
+    [SerializeField] private float thirst;
     public float Thirst
     {
         get
